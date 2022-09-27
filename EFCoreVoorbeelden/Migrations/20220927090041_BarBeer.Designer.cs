@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreVoorbeelden.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927090041_BarBeer")]
+    partial class BarBeer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,21 +38,6 @@ namespace EFCoreVoorbeelden.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bar");
-                });
-
-            modelBuilder.Entity("BarBeer", b =>
-                {
-                    b.Property<int>("BeerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BarId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BeerId", "BarId");
-
-                    b.HasIndex("BarId");
-
-                    b.ToTable("BarBeer");
                 });
 
             modelBuilder.Entity("Beer", b =>
@@ -120,25 +107,6 @@ namespace EFCoreVoorbeelden.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("BarBeer", b =>
-                {
-                    b.HasOne("Bar", "Bar")
-                        .WithMany("BarBeer")
-                        .HasForeignKey("BarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Beer", "Beer")
-                        .WithMany("BarBeer")
-                        .HasForeignKey("BeerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bar");
-
-                    b.Navigation("Beer");
-                });
-
             modelBuilder.Entity("Student", b =>
                 {
                     b.HasOne("Grade", "Grade")
@@ -148,16 +116,6 @@ namespace EFCoreVoorbeelden.Migrations
                         .IsRequired();
 
                     b.Navigation("Grade");
-                });
-
-            modelBuilder.Entity("Bar", b =>
-                {
-                    b.Navigation("BarBeer");
-                });
-
-            modelBuilder.Entity("Beer", b =>
-                {
-                    b.Navigation("BarBeer");
                 });
 
             modelBuilder.Entity("Grade", b =>

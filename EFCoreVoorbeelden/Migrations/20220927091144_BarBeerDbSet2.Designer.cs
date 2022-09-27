@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreVoorbeelden.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927091144_BarBeerDbSet2")]
+    partial class BarBeerDbSet2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,15 +42,23 @@ namespace EFCoreVoorbeelden.Migrations
 
             modelBuilder.Entity("BarBeer", b =>
                 {
-                    b.Property<int>("BeerId")
+                    b.Property<int>("BarBeerId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BarBeerId"), 1L, 1);
 
                     b.Property<int>("BarId")
                         .HasColumnType("int");
 
-                    b.HasKey("BeerId", "BarId");
+                    b.Property<int>("BeerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BarBeerId");
 
                     b.HasIndex("BarId");
+
+                    b.HasIndex("BeerId");
 
                     b.ToTable("BarBeer");
                 });
